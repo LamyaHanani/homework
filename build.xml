@@ -12,7 +12,7 @@
 </target>
 <!-- comment Make jar or executable product -->
 <target name ="jar" depends ="compile">
-          <jar destfile="${result.javaclasses.dir}">
+          <jar dest="${result.javaclasses.dir}">
                    <fileset dir ="${result.jar.file}">
            </fileset>
               </jar>
