@@ -1,0 +1,58 @@
+<project default="test">
+<property name ="src.java.dir" location="C:\Program Files (x86)\Jenkins\workspace\library"/>
+<property name ="src.test.dir" location="C:\Program Files (x86)\Jenkins\workspace\library\src\library"/>
+<property name ="result.dir" location="./staging"/>
+<property name ="result.javaclasses.dir" location="${result.dir}/homework"/>
+<property name ="result.testclasses.dir" location="${result.dir}/homework"/>
+<property name ="result.jar.file" location="C:\Program Files (x86)\Jenkins\workspace\library\myFrameworks"/>
+<target name="compile">
+            <mkdir dir ="${result.javaclasses.dir}"/>
+            <javac srcdir="${src.java.dir}" destdir="${result.javaclasses.dir}" debug="true" includeantruntime="false" classpath=" C:\Users\Hp\eclipse-workspace\library\myFrameworks/junit.jar">
+            </javac>
+</target>
+<!-- comment Make jar or executable product -->
+<target name ="jar" depends ="compile">
+          <jar destfile="${result.javaclasses.dir}">
+                   <fileset dir ="${result.jar.file}">
+           </fileset>
+              </jar>
+        </target>
+        
+        <path id="NecessaryLibraries">
+        <pathelement location="C:\Program Files (x86)\Jenkins\workspace\library\myFrameworks/junit.jar"/>
+        <!--matcher-->
+        <pathelement location="C:\Program Files (x86)\Jenkins\workspace\library\myFrameworks/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+        <!--<pathelement location="C:\Program Files (x86)\Jenkins\workspace\library\myFrameworks/jacocoant.jar"/>-->
+    </path>
+    
+        
+    <target name="compile-testcases" depends="compile">
+        <mkdir dir="${result.testclasses.dir}"/>
+        <javac srcdir="${src.test.dir}"  destdir="${result.testclasses.dir}" debug="true" includeantruntime="false" classpath=" C:\Users\Hp\eclipse-workspace\library\myFrameworks/junit.jar">
+            <classpath>
+                
+                <path refid="NecessaryLibraries"/>
+                <pathelement location="${result.javaclasses.dir}"/>
+            </classpath>
+        </javac>        
+    </target>
+    
+    <target name="test" depends="compile-testcases">
+        <!--fork : each test will run in its own JVM (to seperate test cases)-->
+        <junit printsummary="true" haltonfailure="true" fork="true">
+            <classpath>
+                <path refid="NecessaryLibraries"></path>
+                <pathelement location="${result.javaclasses.dir}"/>
+                <pathelement location="${result.testclasses.dir}"/>
+            </classpath>
+            <formatter type="brief" usefile="false"/>
+            <batchtest >
+                <fileset dir="${result.testclasses.dir}" >
+                     <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+            
+        </junit>
+    </target>
+
+</project>
