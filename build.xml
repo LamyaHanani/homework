@@ -12,7 +12,10 @@
 </target>
 <!-- comment Make jar or executable product -->
 <target name ="jar" depends ="compile">
-          
+           <jar destfile="${result.jar.file}">
+                   <fileset dir ="${result.javaclasses.dir}">
+           </fileset>
+              </jar>
         </target>
         
         <path id="NecessaryLibraries">
