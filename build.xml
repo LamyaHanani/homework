@@ -1,6 +1,6 @@
 <project default="test">
-<property name ="src.java.dir" location="C:\Program Files (x86)\Jenkins\workspace\library"/>
-<property name ="src.test.dir" location="C:\Program Files (x86)\Jenkins\workspace\library\src\library"/>
+<property name ="src.java.dir" location="./src/homework/java"/>
+<property name ="src.test.dir" location="./src/homework/test"/>
 <property name ="result.dir" location="./staging"/>
 <property name ="result.javaclasses.dir" location="${result.dir}/classes"/>
 <property name ="result.testclasses.dir" location="${result.dir}/testclasses"/>
@@ -12,7 +12,7 @@
 </target>
 <!-- comment Make jar or executable product -->
 <target name ="jar" depends ="compile">
-           <jar destfile="${result.jar.file}">
+          <jar destfile="${result.jar.file}">
                    <fileset dir ="${result.javaclasses.dir}">
            </fileset>
               </jar>
